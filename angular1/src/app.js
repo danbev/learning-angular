@@ -15,13 +15,14 @@ module.factory('AngularHelper', function() {
   };
 });
 
-module.service('AngularModel', function() {
-    var service = this,
-        statuses = [
+module.constant('STATUSES', [
             {name: 'Not Started'},
             {name: 'In Progress'},
             {name: 'Done'}
-        ],
+]);
+
+module.service('AngularModel', function() {
+    var service = this,
         tasks = [
             {
                 title: 'First task',
@@ -30,31 +31,27 @@ module.service('AngularModel', function() {
             },
         ];
 
-    service.getStatuses = function () {
-        return statuses;
-    };
-
     service.getTasks = function () {
         return tasks;
     };
 });
 
 // we inject the service and helper functions here:
-module.controller('MainCtrl', function(AngularModel, AngularHelper) {
+module.controller('MainCtrl', function(AngularModel, AngularHelper, STATUSES) {
     var main = this;
 
-    main.statuses = AngularModel.getStatuses();
+    main.statuses = STATUSES;
     main.tasks = AngularModel.getTasks();
-    main.statusesIndex = AngularHelper.buildIndex(main.statuses, 'name');
+    main.statusesIndex = AngularHelper.buildIndex(STATUSES, 'name');
 
-    main.setCurrentTask = function (story) {
-        main.currentStory = story;
-        main.currentStatus = main.statusesIndex[story.status];
+    main.setCurrentTask = function (task) {
+        main.currentStory = task;
+        main.currentStatus = main.statusesIndex[task.status];
     };
 
     main.createTask = function() {
         main.tasks.push({
-            title: 'New Story',
+            title: 'New Task',
             description: 'Description...',
             status: 'Not Started',
         });
