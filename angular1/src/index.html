@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html ng-app="Angular1">
+<head>
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+	
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="app.css">
+
+  <title>Learning Angular 1</title>
+</head>
+<body>
+  <div ng-controller="MainCtrl as main">
+    <div class="col-md-4">
+      <h2>Tasks</h2>
+      <task class="callout" ng-repeat="task in main.tasks" ng-click="main.setCurrentTask(task)"></task>
+      <br/>
+      <a class="btn btn-primary" ng-click="main.createTask()">
+        <span class="glyphicon glyphicon-plus"></span>
+      </a>
+    </div>
+    <div class="col-md-6 content">
+      <h2>Task</h2>
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="control-label" for="inputTitle">Title</label>
+          <div class="controls">
+            <input type="text" class="form-control" id="inputTitle" placeholder="Title" ng-model="main.currentStory.title" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="inputStatus">Status</label>
+          <div class="controls">
+            <select id="inputStatus" class="form-control" ng-model="main.currentStatus"
+                    ng-options="l.name for l in main.statuses"
+                    ng-change="main.setCurrentStatus(main.currentStatus)"></select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="inputDescription">Description</label>
+            <div class="controls">
+              <textarea id="inputDescription" class="form-control" placeholder="Description" rows="3"
+                        ng-model="main.currentStory.description"></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+  </div>
+</body>
+</html>
